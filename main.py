@@ -7,6 +7,7 @@ import psycopg2
 from datetime import datetime
 from collections import defaultdict
 import time
+import os
 
 app = FastAPI(title="GitHub API", description="API para consultar perfiles de GitHub")
 
@@ -50,6 +51,9 @@ def verificar_rate_limit(request: Request):
     request_counts[ip].append(ahora)
 
 def get_db():
+    database_url = os.environ.get("DATABASE_URL")
+    if database_url:
+        return psycopg2.connect(database_url)
     return psycopg2.connect(
         host="db",
         database="midb",
