@@ -127,4 +127,4 @@ def historial(key: str = Security(api_key_header)):
 @app.on_event("startup")
 def startup():
     print(f"DATABASE_URL: {os.environ.get('DATABASE_URL', 'NO ENCONTRADA')}")
-    # init_db()
+    init_db()
