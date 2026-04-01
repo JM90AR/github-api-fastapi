@@ -79,10 +79,6 @@ def registrar(usuario):
     cur.close()
     conn.close()
 
-@app.on_event("startup")
-def startup():
-    init_db()
-
 @app.get("/")
 def inicio():
     return {"mensaje": "API de GitHub con FastAPI"}
