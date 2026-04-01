@@ -12,7 +12,7 @@ import os
 app = FastAPI(title="GitHub API", description="API para consultar perfiles de GitHub")
 
 BASE_URL = "https://api.github.com/users"
-API_KEY = "mi-clave-secreta-123"
+API_KEY = os.environ.get("API_KEY", "mi-clave-secreta-123")
 api_key_header = APIKeyHeader(name="X-API-Key")
 
 # Rate limiting
