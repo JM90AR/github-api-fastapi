@@ -52,14 +52,9 @@ def verificar_rate_limit(request: Request):
 
 def get_db():
     database_url = os.environ.get("DATABASE_URL")
-    if database_url:
-        return psycopg2.connect(database_url)
-    return psycopg2.connect(
-        host="db",
-        database="midb",
-        user="miguel",
-        password="1234"
-    )
+    if not database_url:
+        raise Exception("DATABASE_URL no está configurada")
+    return psycopg2.connect(database_url)
 
 def init_db():
     conn = get_db()
