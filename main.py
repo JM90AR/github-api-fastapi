@@ -51,9 +51,9 @@ def verificar_rate_limit(request: Request):
     request_counts[ip].append(ahora)
 
 def get_db():
-    database_url = os.environ.get("DATABASE_URL")
+    database_url = os.environ.get("DB_URL")
     if not database_url:
-        raise Exception("DATABASE_URL no está configurada")
+        raise Exception("DB_URL no está configurada")
     return psycopg2.connect(database_url)
 
 def init_db():
@@ -126,5 +126,5 @@ def historial(key: str = Security(api_key_header)):
 
 @app.on_event("startup")
 def startup():
-    print(f"DATABASE_URL: {os.environ.get('DATABASE_URL', 'NO ENCONTRADA')}")
+    print(f"DB_URL: {os.environ.get('DB_URL', 'NO ENCONTRADA')}")
     init_db()
