@@ -15,6 +15,7 @@ A production-ready REST API built with **Python**, **FastAPI**, **PostgreSQL**, 
 | Docker | Containerization |
 | Docker Compose | Multi-container orchestration |
 | Uvicorn | ASGI server |
+| Railway | Cloud deployment |
 
 ---
 
@@ -26,6 +27,7 @@ A production-ready REST API built with **Python**, **FastAPI**, **PostgreSQL**, 
 - ❌ **Error Handling** — If a GitHub user doesn't exist, the API returns a clear `404 Not Found` response instead of crashing.
 - 🗄️ **Query History** — Every API call is logged to a PostgreSQL database with the username and timestamp.
 - 📄 **Auto-generated Docs** — FastAPI automatically generates interactive API documentation at `/docs`.
+- ☁️ **Cloud Deployment** — Deployed on Railway with PostgreSQL as a managed database service.
 
 ---
 
@@ -65,7 +67,7 @@ Return validated JSON (Pydantic)
 **Request:**
 ```
 GET /perfil/torvalds
-Headers: X-API-Key: mi-clave-secreta-123
+Headers: X-API-Key: your-api-key
 ```
 
 **Response:**
@@ -79,12 +81,6 @@ Headers: X-API-Key: mi-clave-secreta-123
 ```
 
 ### User not found
-
-**Request:**
-```
-GET /perfil/usuarioquenoeexiste
-Headers: X-API-Key: mi-clave-secreta-123
-```
 
 **Response:**
 ```json
@@ -110,7 +106,7 @@ Headers: X-API-Key: mi-clave-secreta-123
 - Docker
 - Docker Compose
 
-### Run with Docker (recommended)
+### Run locally with Docker (recommended)
 
 1. Clone this repository:
 ```bash
@@ -128,24 +124,33 @@ docker compose up --build
 http://localhost:8000/docs
 ```
 
-4. Authenticate using the **Authorize** button with the API key:
+4. Authenticate using the **Authorize** button with your API key.
+
+---
+
+## ☁️ Deploy on Railway
+
+This project is configured to deploy on [Railway](https://railway.app) with a managed PostgreSQL database.
+
+### Steps to deploy:
+
+1. Create an account on [railway.app](https://railway.app) and login with GitHub
+2. Click **New Project** → **Deploy from GitHub repo** → select this repo
+3. Add a **PostgreSQL** database service to the project
+4. Go to your API service → **Variables** → add:
+   - `DB_URL` = your PostgreSQL connection URL from Railway
+5. Railway will automatically build and deploy using the Dockerfile
+6. Go to **Settings** → **Networking** → **Generate Domain** to get a public URL
+7. Access your live API at:
 ```
-mi-clave-secreta-123
+https://your-project.up.railway.app/docs
 ```
 
-### Run without Docker
+### Environment Variables
 
-1. Install dependencies:
-```bash
-pip install fastapi uvicorn requests psycopg2-binary
-```
-
-2. Set up a PostgreSQL database and update the connection settings in `main.py`.
-
-3. Run the server:
-```bash
-uvicorn main:app --reload
-```
+| Variable | Description |
+|----------|-------------|
+| `DB_URL` | PostgreSQL connection URL |
 
 ---
 
@@ -155,7 +160,7 @@ uvicorn main:app --reload
 github-api-fastapi/
 ├── main.py              # FastAPI application
 ├── Dockerfile           # Container definition
-├── docker-compose.yml   # Multi-container setup
+├── docker-compose.yml   # Multi-container local setup
 └── requirements.txt     # Python dependencies
 ```
 
