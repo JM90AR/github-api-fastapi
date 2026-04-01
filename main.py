@@ -132,3 +132,8 @@ def historial(key: str = Security(api_key_header)):
     cur.close()
     conn.close()
     return [ConsultaResponse(usuario=r[0], fecha=str(r[1])) for r in rows]
+
+@app.on_event("startup")
+def startup():
+    print(f"DATABASE_URL: {os.environ.get('DATABASE_URL', 'NO ENCONTRADA')}")
+    init_db()
