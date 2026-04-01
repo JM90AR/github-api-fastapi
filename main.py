@@ -51,10 +51,7 @@ def verificar_rate_limit(request: Request):
     request_counts[ip].append(ahora)
 
 def get_db():
-    database_url = os.environ.get("DB_URL")
-    if not database_url:
-        raise Exception("DB_URL no está configurada")
-    return psycopg2.connect(database_url)
+    return psycopg2.connect("postgresql://postgres:eDgkiMpVXIhNkyCbqDsqmkxHeXvbJEph@hopper.proxy.rlwy.net:50117/railway")
 
 def init_db():
     conn = get_db()
